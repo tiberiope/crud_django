@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4>EDITAR EDITORA</h4>
+            <hr>
+            <form method="POST" action="{% url 'editora_edit' editora.id %}">
+                {% csrf_token %}
+                <h6>Nome</h6>
+                <input type="text" name="nome" class="form-control" value="{{ editora.nome }}" autofocus>
+                <br>
+                <h6>Cidade</h6>
+                <input type="text" name="cidade" class="form-control" value="{{ editora.cidade }}">
+                <br>
+                <h6>Estado</h6>
+                <input type="text" name="estado" class="form-control" value="{{ editora.estado }}">
+                <br>
+                <button class="btn btn-success" type="submit">Salvar</button>
+                <a href="{% url 'editora_lista' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
