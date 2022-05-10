@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4>FORMATOS</h4>
+            <hr>
+            <a class="btn btn-success" href="{% url 'formato_add' %}">Adicionar</a>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                    </th>
+                </thead>
+                <tbody>
+                    {% for formato in formatos %}
+                    <tr>
+                        <td>{{ formato.nome }}</td>
+                        <td><a class="btn btn-warning" href="{% url 'formato_edit' formato.id %}">Editar</a>
+                            <a class="btn btn-danger" href="{% url 'formato_del' formato.id %}"
+                            onclick="return confirm('Tem certeza que deseja excluir este formato?')">Excluir</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

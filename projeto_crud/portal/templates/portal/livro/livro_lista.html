@@ -15,6 +15,7 @@
                         <th>Data de Lançamento</th>
                         <th>ISBN</th>
                         <th>Nº de Páginas</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,7 +23,12 @@
                     <tr>
                         <td>{{ livro.titulo }}</td>
                         <td>{{ livro.subtitulo }}</td>
-                        <td>{{ livro.autor }}</td>
+                        {% for autor in autores %}
+                            {% if livro.autor_id == autor.id %}
+                                <td>{{ autor.nome }}</td>
+                                {{ break }}
+                            {% endif %}     
+                        {% endfor %}
                         <td>{{ livro.data_lancamento }}</td>
                         <td>{{ livro.isbn }}</td>
                         <td>{{ livro.numero_paginas }}</td>

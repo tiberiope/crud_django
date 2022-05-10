@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4>ADICIONAR FORMATO</h4>
+            <hr>
+            <form method="POST" action="{% url 'formato_add' %}">
+                {% csrf_token %}
+                <h6>Nome</h6>
+                <input type="text" name="nome" class="form-control" autofocus>
+                <br>
+                <button class="btn btn-success" type="submit">Salvar</button>
+                <a class="btn btn-danger" href="{% url 'formato_lista' %}">Cancelar</a>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}

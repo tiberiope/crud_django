@@ -12,10 +12,22 @@
                 <p>Subtítulo</p>
                 <input type="text" name="subtitulo">
                 <p>Autor</p>
-                <input type="text" name="autor">
+
+                <select name="autor" id="autor" required>
+                    <option value=""></option>
+                    {% for autor in autores %}
+                        <option value="{{ autor.id }}">{{ autor.nome }}</option>
+                    {% endfor %}
+                </select>
+
+                <p>Editora</p>
+                <input type="text" name="editora">
+                <p>Formato</p>
+                <input type="text" name="formato">
                 <p>Data de Lançamento</p>
                 <input type="date" name="data_lancamento">
                 <p>ISBN</p>
+
                 <input type="text" name="isbn">
                 <p>Nº de Páginas</p>
                 <input type="number" name="numero_paginas" min="1">

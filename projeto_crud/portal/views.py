@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from portal.models import Autor, Livro, Editora
+from portal.models import Autor, Livro, Editora, Formato
 from portal.forms import AutorForm
 
 # Create your views here.
@@ -8,7 +8,7 @@ def home(request):
     return render(request, 'portal/home.html')
 
 
-# funções do autor.
+# Autor ------------------
 def autor_lista(request):
     autores = Autor.objects.all()
 
@@ -59,13 +59,15 @@ def autor_del(request, autor_pk):
 
     return redirect('autor_lista')
 
+
 # Livros ----------------
 def livro_lista(request):
-
     livros = Livro.objects.all()
+    autores = Autor.objects.all()
 
     conteudo = {
-        'livros': livros
+        'livros': livros,
+        'autores': autores,
     }
 
     return render(request, 'portal/livro/livro_lista.html', conteudo)
@@ -76,18 +78,26 @@ def livro_add(request):
         titulo = request.POST['titulo']
         subtitulo = request.POST['subtitulo']
         autor = request.POST['autor']
+        editora = request.POST['editora']
+        formato = request.POST['formato']
         data_lancamento = request.POST['data_lancamento']
         isbn = request.POST['isbn']
         numero_paginas = request.POST['numero_paginas']
 
-        livro = Livro.objects.create(titulo=titulo, subtitulo=subtitulo, autor=autor, data_lancamento=data_lancamento, isbn=isbn, numero_paginas=numero_paginas)
+        livro = Livro.objects.create(titulo=titulo, subtitulo=subtitulo, autor_id=autor, editora_id=int(editora), formato_id=int(formato), data_lancamento=data_lancamento, isbn=isbn, numero_paginas=numero_paginas)
         livro.save()
         return redirect('livro_lista')
+    
+    autores = Autor.objects.all()
 
-    return render(request, 'portal/livro/livro_add.html')
+    conteudo = {
+        'autores': autores
+    }
+
+    return render(request, 'portal/livro/livro_add.html', conteudo)
 
 
-# Editora
+# Editora ---------------
 def editora_lista(request):
     editoras = Editora.objects.all()
 
@@ -137,9 +147,58 @@ def editora_del(request, editora_pk):
 
     return redirect('editora_lista')
 
-def formato(request):
 
-    return render(request, 'portal/formato.html')
+# Formato ---------------
+def formato_lista(request):
+    formatos = Formato.objects.all()
+
+    conteudo = {
+        'formatos': formatos
+    }
+
+    return render(request, 'portal/formato/formato_lista.html', conteudo)
+
+
+def formato_add(request):
+    if request.POST:
+        nome = request.POST['nome']
+        formato = Formato.objects.create(nome=nome)
+        formato.save()
+
+        return redirect('formato_lista')
+
+    return render(request, 'portal/formato/formato_add.html')
+
+
+def formato_edit(request, formato_pk):
+    formato = Formato.objects.get(pk=formato_pk)
+
+    if request.POST:
+        formato.nome = request.POST['nome']
+        formato.save()
+
+        return redirect('formato_lista')
+
+    conteudo = {
+        'formato': formato
+    }
+
+    return render(request, 'portal/formato/formato_edit.html', conteudo)
+
+
+def formato_del(request, formato_pk):
+    formato = Formato.objects.get(pk=formato_pk)
+
+    formato.delete()
+
+    return redirect('formato_lista')
+
+    
+
+
+
+
+
 
 def dashboard(request):
 
