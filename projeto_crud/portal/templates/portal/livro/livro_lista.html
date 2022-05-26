@@ -12,6 +12,8 @@
                         <th>Título</th>
                         <th>Subtítulo</th>
                         <th>Autor</th>
+                        <th>Editora</th>
+                        <th>Formato</th>
                         <th>Data de Lançamento</th>
                         <th>ISBN</th>
                         <th>Nº de Páginas</th>
@@ -23,17 +25,34 @@
                     <tr>
                         <td>{{ livro.titulo }}</td>
                         <td>{{ livro.subtitulo }}</td>
+
                         {% for autor in autores %}
                             {% if livro.autor_id == autor.id %}
                                 <td>{{ autor.nome }}</td>
                                 {{ break }}
                             {% endif %}     
                         {% endfor %}
+
+                        {% for editora in editoras %}
+                            {% if livro.editora_id == editora.id %}
+                                <td>{{ editora.nome }}</td>
+                                {{break}}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for formato in formatos %}
+                            {% if livro.formato_id == formato.id %}
+                                <td>{{ formato.nome }}</td>
+                                {{break}}
+                            {% endif %}
+                        {% endfor %}
+
                         <td>{{ livro.data_lancamento }}</td>
                         <td>{{ livro.isbn }}</td>
                         <td>{{ livro.numero_paginas }}</td>
-                        <td><a class="btn btn-warning">Editar</a>
-                            <a class="btn btn-danger">Excluir</a></td>
+                        <td><a class="btn btn-warning" href="{% url 'livro_edit' livro.id %}">Editar</a>
+                            <a class="btn btn-danger" href="{% url 'livro_del' livro.id %}" 
+                            onclick="return confirm('Tem certeza que deseja excluir este livro?')">Excluir</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

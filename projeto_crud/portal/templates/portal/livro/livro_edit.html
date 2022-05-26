@@ -3,14 +3,14 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <h4>ADICIONAR LIVRO</h4>
+            <h4>EDITAR LIVRO</h4>
             <hr>
-            <form method="POST" action="{% url 'livro_add' %}">
+            <form method="POST" action="{% url 'livro_edit' livro.id %}">
                 {% csrf_token %}
                 <p>Título</p>
-                <input type="text" name="titulo">
+                <input type="text" name="titulo" value="{{ livro.titulo }}">
                 <p>Subtítulo</p>
-                <input type="text" name="subtitulo">
+                <input type="text" name="subtitulo" value="{{ livro.subtitulo }}">
                 
                 <p>Autor</p>
                 <select name="autor" id="autor" required>
@@ -38,19 +38,18 @@
                 </select>
                 
                 <p>Data de Lançamento</p>
-                <input type="date" name="data_lancamento">
-                
+                <input type="date" name="data_lancamento" value="livro.data_lancamento">
+
                 <p>ISBN</p>
-                <input type="text" name="isbn">
+                <input type="text" name="isbn" value="livro.isbn">
                 
                 <p>Nº de Páginas</p>
-                <input type="number" name="numero_paginas" min="1" class="form-control">
+                <input type="number" name="numero_paginas" min="1" value="livro.numero_paginas" class="form-control">
                 <br>
                 <button class="btn btn-success" type="submit">Salvar</button>
                 <a class="btn btn-danger" href="{% url 'livro_lista' %}">Cancelar</a>
             </form>
         </div>
     </div>
-    
 
 {% endblock %}

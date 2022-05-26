@@ -64,10 +64,14 @@ def autor_del(request, autor_pk):
 def livro_lista(request):
     livros = Livro.objects.all()
     autores = Autor.objects.all()
+    editoras = Editora.objects.all()
+    formatos = Formato.objects.all()
 
     conteudo = {
         'livros': livros,
         'autores': autores,
+        'editoras': editoras,
+        'formatos': formatos,
     }
 
     return render(request, 'portal/livro/livro_lista.html', conteudo)
@@ -89,12 +93,52 @@ def livro_add(request):
         return redirect('livro_lista')
     
     autores = Autor.objects.all()
+    editoras = Editora.objects.all()
+    formatos = Formato.objects.all()
+
 
     conteudo = {
-        'autores': autores
+        'autores': autores,
+        'editoras': editoras,
+        'formatos': formatos,
     }
 
     return render(request, 'portal/livro/livro_add.html', conteudo)
+
+
+def livro_edit(request, livro_pk):
+    livro = Livro.objects.get(pk=livro_pk)
+    autores = Autor.objects.all()
+    editoras = Editora.objects.all()
+    formatos = Formato.objects.all()
+
+    if request.POST:
+        livro.titulo = request.POST['titulo']
+        livro.subtitulo = request.POST['subtitulo']
+        livro.autor = request.POST['autor']
+        livro.editora = request.POST['editora']
+        livro.formato = request.POST['formato']
+        livro.data_lancamento = request.POST['data_lancamento']
+        livro.isbn = request.POST['isbn']
+        livro.numero_paginas = request.POST['numero_paginas']
+        livro.save()
+
+        return redirect('livro_lista')
+
+    conteudo = {
+        'livro': livro,
+        'autores': autores,
+        'editoras': editoras,
+        'formatos': formatos,
+    }
+
+    return render(request, 'portal/livro/livro_edit.html', conteudo)
+
+def livro_del(request, livro_pk):
+    livro = Livro.objects.get(pk=livro_pk)
+    livro.delete()
+
+    return redirect('livro_lista')
 
 
 # Editora ---------------
